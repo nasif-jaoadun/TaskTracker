@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.hishabee.tasktracker.databinding.ActivityMainBinding
 import com.hishabee.tasktracker.viewmodel.TaskListingsViewModal
 
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var taskViewModal: TaskListingsViewModal
+    private lateinit var recyclerView : RecyclerView
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,14 +31,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_actionbar_menu)
+        recyclerView = binding.contentMain.recyclerViewTaskList
         taskViewModal= ViewModelProvider(this).get(TaskListingsViewModal::class.java)
         taskViewModal.taskData.observe(this, Observer {
-            for(task in it){
-
-            }
+            val adapter = TaskRecyclerViewAdapter(this, it)
+            recyclerView.adapter = adapter
         })
 
-        binding.toolbar.setNavigationIcon(R.drawable.icon_actionbar_menu)
+
         binding.fab.setOnClickListener { view ->
             binding.contentMain.clNewTask.visibility = View.VISIBLE
             binding.contentMain.recyclerViewTaskList.visibility = View.GONE
