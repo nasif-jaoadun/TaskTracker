@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -48,29 +49,27 @@ class MainActivity : AppCompatActivity() {
 
         binding.contentMain.ivAddTask.setOnClickListener{
 //            taskViewModal.addTask()
-            binding.contentMain.etTaskName.text.clear()
-            binding.contentMain.clNewTask.visibility = View.GONE
-            binding.contentMain.recyclerViewTaskList.visibility = View.VISIBLE
+            if(binding.contentMain.etTaskName.text.toString().trim().isEmpty()){
+                Toast.makeText(this, getString(R.string.error_empty_task), Toast.LENGTH_LONG)
+            }else{
+                resetUI()
+            }
+
         }
 
         binding.contentMain.ivCancelAddTask.setOnClickListener{
-            binding.contentMain.etTaskName.text.clear()
-            binding.contentMain.clNewTask.visibility = View.GONE
-            binding.contentMain.recyclerViewTaskList.visibility = View.VISIBLE
+            resetUI()
         }
 
 
     }
 
-
-
-
-
-
-
-
-
-
+    private fun resetUI() {
+        binding.contentMain.etTaskName.text.clear()
+        binding.contentMain.clNewTask.visibility = View.GONE
+        binding.contentMain.recyclerViewTaskList.visibility = View.VISIBLE
+        binding.fab.isClickable = true
+    }
 
 
     /*override fun onCreateOptionsMenu(menu: Menu): Boolean {

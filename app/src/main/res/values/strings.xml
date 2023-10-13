@@ -4,6 +4,7 @@
 
     <string name="headline_text">All Tasks</string>
     <string name="add_task_hint">Type Task name to add</string>
+    <string name="error_empty_task">Please add a task name to add</string>
 
 
     <!-- Strings used for fragments for navigation -->
