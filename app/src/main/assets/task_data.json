@@ -1,0 +1,50 @@
+[
+  {
+    "taskName": "Home work",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "Break Fast",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "Lunch",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "Play Games",
+    "isDoneStatus": true
+  },
+  {
+    "taskName": "Dinner",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "Go for a walk",
+    "isDoneStatus": true
+  },
+  {
+    "taskName": "Eating Snacks",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "Having Exercise",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "Go to super shop",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "take a nap",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "yoga",
+    "isDoneStatus": false
+  },
+  {
+    "taskName": "deep sleep",
+    "isDoneStatus": false
+  }
+]

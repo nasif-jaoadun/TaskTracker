@@ -10,10 +10,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.hishabee.tasktracker.databinding.ActivityMainBinding
 import com.hishabee.tasktracker.viewmodel.TaskListingsViewModal
 
@@ -29,14 +32,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_actionbar_menu)
+        binding.contentMain.swipeLayout.setOnRefreshListener {
+            taskViewModal.refreshData()
+        }
         taskViewModal= ViewModelProvider(this).get(TaskListingsViewModal::class.java)
         taskViewModal.taskData.observe(this, Observer {
-            for(task in it){
-
-            }
+            val adapter = TaskRecyclerViewAdapter(this, it)
+            binding.contentMain.recyclerViewTaskList.adapter = adapter
+            binding.contentMain.swipeLayout.isRefreshing = false
         })
 
-        binding.toolbar.setNavigationIcon(R.drawable.icon_actionbar_menu)
+
         binding.fab.setOnClickListener { view ->
             binding.contentMain.clNewTask.visibility = View.VISIBLE
             binding.contentMain.recyclerViewTaskList.visibility = View.GONE
@@ -45,29 +52,27 @@ class MainActivity : AppCompatActivity() {
 
         binding.contentMain.ivAddTask.setOnClickListener{
 //            taskViewModal.addTask()
-            binding.contentMain.etTaskName.text.clear()
-            binding.contentMain.clNewTask.visibility = View.GONE
-            binding.contentMain.recyclerViewTaskList.visibility = View.VISIBLE
+            if(binding.contentMain.etTaskName.text.toString().trim().isEmpty()){
+                Toast.makeText(this, getString(R.string.error_empty_task), Toast.LENGTH_LONG).show()
+            }else{
+                resetUI()
+            }
+
         }
 
         binding.contentMain.ivCancelAddTask.setOnClickListener{
-            binding.contentMain.etTaskName.text.clear()
-            binding.contentMain.clNewTask.visibility = View.GONE
-            binding.contentMain.recyclerViewTaskList.visibility = View.VISIBLE
+            resetUI()
         }
 
 
     }
 
-
-
-
-
-
-
-
-
-
+    private fun resetUI() {
+        binding.contentMain.etTaskName.text.clear()
+        binding.contentMain.clNewTask.visibility = View.GONE
+        binding.contentMain.recyclerViewTaskList.visibility = View.VISIBLE
+        binding.fab.isClickable = true
+    }
 
 
     /*override fun onCreateOptionsMenu(menu: Menu): Boolean {

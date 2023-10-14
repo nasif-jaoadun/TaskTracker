@@ -9,3 +9,4 @@ const val ON_STOP = "On Stop Function Running"
 const val ON_DESTROY = "On Destroy Function Running"
 
 const val HEAD_LINE = "Default_Headline_Text"
+const val WEB_SERVICE_URL = "https://www.hishabee.com"
