@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.hishabee.tasktracker.databinding.ActivityMainBinding
 import com.hishabee.tasktracker.viewmodel.TaskListingsViewModal
 
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var taskViewModal: TaskListingsViewModal
-    private lateinit var recyclerView : RecyclerView
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +33,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         binding.toolbar.setNavigationIcon(R.drawable.icon_actionbar_menu)
-        recyclerView = binding.contentMain.recyclerViewTaskList
+        binding.contentMain.swipeLayout.setOnRefreshListener {
+            taskViewModal.refreshData()
+        }
         taskViewModal= ViewModelProvider(this).get(TaskListingsViewModal::class.java)
         taskViewModal.taskData.observe(this, Observer {
             val adapter = TaskRecyclerViewAdapter(this, it)
-            recyclerView.adapter = adapter
+            binding.contentMain.recyclerViewTaskList.adapter = adapter
+            binding.contentMain.swipeLayout.isRefreshing = false
         })
 
 
@@ -50,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.contentMain.ivAddTask.setOnClickListener{
 //            taskViewModal.addTask()
             if(binding.contentMain.etTaskName.text.toString().trim().isEmpty()){
-                Toast.makeText(this, getString(R.string.error_empty_task), Toast.LENGTH_LONG)
+                Toast.makeText(this, getString(R.string.error_empty_task), Toast.LENGTH_LONG).show()
             }else{
                 resetUI()
             }
