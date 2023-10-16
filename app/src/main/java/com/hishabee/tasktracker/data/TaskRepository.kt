@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.hishabee.tasktracker.util.LOG_TAG
 import com.hishabee.tasktracker.util.WEB_SERVICE_URL
 import com.hishabee.tasktracker.utils.FileHelper
+import com.hishabee.tasktracker.utils.Utility
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -41,7 +42,7 @@ class TaskRepository(val app: Application) {
 
     @WorkerThread
     suspend fun callWebService(){
-        if (networkAvailable()) {
+        if (Utility.networkAvailable(app)) {
             withContext(Dispatchers.Main) {
                 Toast.makeText(app, "Using remote data", Toast.LENGTH_LONG).show()
             }
@@ -58,13 +59,7 @@ class TaskRepository(val app: Application) {
         }
     }
 
-    @Suppress("DEPRECATION")
-    private fun networkAvailable(): Boolean {
-        val connectivityManager = app.getSystemService(Context.CONNECTIVITY_SERVICE)
-                as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo?.isConnectedOrConnecting ?: false
-    }
+
 
     fun refreshDataFromWeb() {
         CoroutineScope(Dispatchers.IO).launch {

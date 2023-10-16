@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             taskViewModal.refreshData()
         }
         taskViewModal= ViewModelProvider(this).get(TaskListingsViewModal::class.java)
+//        taskViewModal= ViewModelProvider(this, defaultViewModelProviderFactory).get(TaskListingsViewModal::class.java)
         taskViewModal.taskData.observe(this, Observer {
             val adapter = TaskRecyclerViewAdapter(this, it)
             binding.contentMain.recyclerViewTaskList.adapter = adapter

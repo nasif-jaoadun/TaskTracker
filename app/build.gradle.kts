@@ -1,7 +1,8 @@
+import java.util.regex.Pattern.compile
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
 }
 
 android {
@@ -37,6 +38,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    dataBinding{
+        enable = true
+    }
 }
 
 dependencies {
@@ -54,11 +58,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.squareup.moshi:moshi:1.14.0")
-    implementation("com.squareup.moshi.moshi-kotlin:1.14.0")
 
-
-    val retrofit2_version = "2.6.2"
-    implementation("com.squareup.retrofit2.retrofit:$retrofit2_version")
+    val retrofit2_version = "2.9.0"
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit2_version")
 
     val coroutines_version = "1.7.3"
@@ -69,5 +70,4 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
 }
