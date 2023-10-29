@@ -9,6 +9,7 @@ class TaskListingsViewModal(app: Application): AndroidViewModel(app) {
     val taskData = dataRepo.taskData
 
     fun refreshData() {
-        dataRepo.refreshDataFromWeb()
+//        dataRepo.refreshDataFromWeb()
+        dataRepo.getStaticTaskData()
     }
 }

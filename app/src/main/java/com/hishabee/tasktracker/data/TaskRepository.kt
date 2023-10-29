@@ -59,6 +59,11 @@ class TaskRepository(val app: Application) {
         }
     }
 
+    fun getStaticTaskData(){
+        val staticTaskData = getTaskDataFromAsset(app)
+        taskData.postValue(staticTaskData)
+    }
+
 
 
     fun refreshDataFromWeb() {

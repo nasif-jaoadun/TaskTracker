@@ -45,11 +45,7 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        binding.fab.setOnClickListener { view ->
-            binding.contentMain.clNewTask.visibility = View.VISIBLE
-            binding.contentMain.recyclerViewTaskList.visibility = View.GONE
-            binding.fab.isClickable = false
-        }
+        binding.fab.setOnClickListener {showViewToAddTask()}
 
         binding.contentMain.ivAddTask.setOnClickListener{
 //            taskViewModal.addTask()
@@ -66,6 +62,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun showViewToAddTask() {
+        binding.contentMain.clNewTask.visibility = View.VISIBLE
+        binding.contentMain.recyclerViewTaskList.visibility = View.GONE
+        binding.fab.isClickable = false
     }
 
     private fun resetUI() {
